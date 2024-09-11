@@ -1,5 +1,6 @@
 import {useLoaderData} from '@remix-run/react';
 import {json} from '@shopify/remix-oxygen';
+import ProductGrid from '../components/ProductGrid';
 
 export async function loader({params, context}) {
   const {handle} = params;
@@ -40,6 +41,10 @@ export default function Collection() {
           </div>
         )}
       </header>
+      <ProductGrid
+        collection={collection}
+        url={`/collections/${collection.handle}`}
+      />
     </>
   );
 }
@@ -47,9 +52,37 @@ export default function Collection() {
 const COLLECTION_QUERY = `#graphql
   query CollectionDetails($handle: String!) {
     collection(handle: $handle) {
+      id
       title
       description
       handle
+      products(first: 4) {
+        nodes {
+          id
+          title
+          publishedAt
+          handle
+          variants(first: 1) {
+            nodes {
+              id
+              image {
+                url
+                altText
+                width
+                height
+              }
+              price {
+                amount
+                currencyCode
+              }
+              compareAtPrice {
+                amount
+                currencyCode
+              }
+            }
+          }
+        }
+      }
     }
   }
 `;
