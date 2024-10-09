@@ -1,21 +1,11 @@
 import {useLoaderData} from '@remix-run/react';
 import {json} from '@shopify/remix-oxygen';
 import ProductGrid from '../components/ProductGrid';
-import {getPaginationVariables} from '@shopify/hydrogen';
-const seo = ({data}) => ({
-  title: data?.collection?.title,
-  description: data?.collection?.description.substr(0, 154),
-});
 
-export async function loader({params, context, request}) {
-  const paginationVariables = getPaginationVariables(request, {
-    pageBy: 4,
-  });
+export async function loader({params, context}) {
   const {handle} = params;
-  console.log('params:', params)
   const {collection} = await context.storefront.query(COLLECTION_QUERY, {
     variables: {
-      ...paginationVariables,
       handle,
     },
   });
@@ -30,13 +20,6 @@ export async function loader({params, context, request}) {
   return json({
     collection,
   });
-}
-
-export function meta({data}) {
-  return [
-    {title: data?.collection?.title ?? 'Collection'},
-    {description: data?.collection?.description},
-  ];
 }
 
 export default function Collection() {
@@ -67,24 +50,13 @@ export default function Collection() {
 }
 
 const COLLECTION_QUERY = `#graphql
-  query CollectionDetails(
-    $handle: String!
-    $first: Int
-    $last: Int
-    $startCursor: String
-    $endCursor: String
-  ) {
+  query CollectionDetails($handle: String!) {
     collection(handle: $handle) {
       id
       title
       description
       handle
-      products(
-        first: $first,
-        last: $last,
-        before: $startCursor,
-        after: $endCursor,
-      ) {
+      products(first: 4) {
         nodes {
           id
           title
@@ -110,13 +82,7 @@ const COLLECTION_QUERY = `#graphql
             }
           }
         }
-        pageInfo {
-          hasPreviousPage
-          hasNextPage
-          startCursor
-          endCursor
-        }
       }
     }
   }
-  `;
+`;
