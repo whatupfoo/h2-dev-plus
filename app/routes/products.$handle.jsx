@@ -52,7 +52,7 @@ export default function ProductHandle() {
         <div className="md:sticky md:mx-auto max-w-xl md:max-w-[24rem] grid gap-2 p-0 md:p-6 md:px-0 top-[6rem] lg:top-[8rem] xl:top-[10rem]">
           <div className="grid gap-2">
             <h1 className="text-4xl font-bold leading-10 whitespace-normal">
-              {product.title} - testing our o2 deployments
+              {product.title} - testing our o2 deployments - pushing from local
             </h1>
             <span className="max-w-prose whitespace-pre-wrap inherit text-copy opacity-50 font-medium">
               {product.vendor}
