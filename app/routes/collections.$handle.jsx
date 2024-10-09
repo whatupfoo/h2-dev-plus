@@ -2,17 +2,12 @@ import {useLoaderData} from '@remix-run/react';
 import {json} from '@shopify/remix-oxygen';
 import ProductGrid from '../components/ProductGrid';
 import {getPaginationVariables} from '@shopify/hydrogen';
-const seo = ({data}) => ({
-  title: data?.collection?.title,
-  description: data?.collection?.description.substr(0, 154),
-});
 
 export async function loader({params, context, request}) {
   const paginationVariables = getPaginationVariables(request, {
     pageBy: 4,
   });
   const {handle} = params;
-  console.log('params:', params)
   const {collection} = await context.storefront.query(COLLECTION_QUERY, {
     variables: {
       ...paginationVariables,
@@ -30,13 +25,6 @@ export async function loader({params, context, request}) {
   return json({
     collection,
   });
-}
-
-export function meta({data}) {
-  return [
-    {title: data?.collection?.title ?? 'Collection'},
-    {description: data?.collection?.description},
-  ];
 }
 
 export default function Collection() {
@@ -119,4 +107,4 @@ const COLLECTION_QUERY = `#graphql
       }
     }
   }
-  `;
+`
