@@ -7,6 +7,7 @@ export async function loader({params, context, request}) {
   const paginationVariables = getPaginationVariables(request, {
     pageBy: 4,
   });
+  console.log(params)
   const {handle} = params;
   const {collection} = await context.storefront.query(COLLECTION_QUERY, {
     variables: {

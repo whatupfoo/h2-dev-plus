@@ -14,6 +14,8 @@ export async function loader({params, context, request}) {
     selectedOptions.push({name, value});
   });
 
+  console.log(JSON.stringify(selectedOptions, null, 2));
+
   const {shop, product} = await context.storefront.query(PRODUCT_QUERY, {
     variables: {
       handle,
