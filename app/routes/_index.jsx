@@ -4,11 +4,12 @@ import {Image} from '@shopify/hydrogen';
 export function meta() {
   return [
     {title: 'Hydrogen'},
-    {description: 'A custom storefront powered by Hydrogen'},
+    {description: 'A custgit som storefront powered by Hydrogen'},
   ];
 }
 
 export async function loader({context}) {
+  console.log(context)
   return await context.storefront.query(COLLECTIONS_QUERY);
 }
 
@@ -36,6 +37,9 @@ export default function Index() {
                 <h2 className="whitespace-pre-wrap max-w-prose font-medium text-copy">
                   {collection.title}
                 </h2>
+                <h3>
+                  A NEW DEMO
+                </h3>
               </div>
             </Link>
           );
