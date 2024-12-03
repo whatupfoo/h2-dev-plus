@@ -1,4 +1,4 @@
-import {useLoaderData} from '@remix-run/react';
+import {useLoaderData, useParams} from '@remix-run/react';
 import {json} from '@shopify/remix-oxygen';
 import ProductGrid from '../components/ProductGrid';
 import {getPaginationVariables} from '@shopify/hydrogen';
@@ -36,6 +36,9 @@ export default function Collection() {
         <h1 className="text-4xl whitespace-pre-wrap font-bold inline-block">
           {collection.title}
         </h1>
+        <h2>
+          TESTING o2 deployment
+        </h2>
 
         {collection.description && (
           <div className="flex items-baseline justify-between w-full">

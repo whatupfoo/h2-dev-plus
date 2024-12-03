@@ -1,31 +1,15 @@
 import { Link, useLocation, useSearchParams, useNavigation } from '@remix-run/react';
 
-export default function ProductOptions({options, selectedVariant}) {
-  const {pathname, search} = useLocation();
-  const [currentSearchParams] = useSearchParams();
+export default function ProductOptions({ options }) {
   const navigation = useNavigation();
-
-  const paramsWithDefaults = (() => {
-    const defaultParams = new URLSearchParams(currentSearchParams);
-
-    if (!selectedVariant) {
-      return defaultParams;
-    }
-
-    for (const {name, value} of selectedVariant.selectedOptions) {
-      if (!currentSearchParams.has(name)) {
-        defaultParams.set(name, value);
-      }
-    }
-
-    return defaultParams;
-  })();
+  const { pathname } = useLocation();
+  const [currentSearchParams] = useSearchParams();
 
   // Update the in-flight request data from the 'navigation' (if available)
-  // to create an optimistic UI that selects a link before the request is completed
+  // to create an optimistic UI that selects a link before the request completes
   const searchParams = navigation.location
     ? new URLSearchParams(navigation.location.search)
-    : paramsWithDefaults;
+    : currentSearchParams;
 
   return (
     <div className="grid gap-4 mb-6">
@@ -45,7 +29,6 @@ export default function ProductOptions({options, selectedVariant}) {
             <h3 className="whitespace-pre-wrap max-w-prose font-bold text-lead min-w-[4rem]">
               {option.name}
             </h3>
-            <h3>testing o2 deployments</h3>
 
             <div className="flex flex-wrap items-baseline gap-4">
               {option.optionValues.map((value) => {
