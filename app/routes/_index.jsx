@@ -36,6 +36,9 @@ export default function Index() {
                 <h2 className="whitespace-pre-wrap max-w-prose font-medium text-copy">
                   {collection.title}
                 </h2>
+                <h2>
+                  TESTING O2
+                </h2>
               </div>
             </Link>
           );
