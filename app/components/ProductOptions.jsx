@@ -45,7 +45,6 @@ export default function ProductOptions({options, selectedVariant}) {
             <h3 className="whitespace-pre-wrap max-w-prose font-bold text-lead min-w-[4rem]">
               {option.name}
             </h3>
-            <h3>testing o2 deployments</h3>
 
             <div className="flex flex-wrap items-baseline gap-4">
               {option.optionValues.map((value) => {
