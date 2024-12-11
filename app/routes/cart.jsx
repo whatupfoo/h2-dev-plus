@@ -1,5 +1,7 @@
 import {CartForm} from '@shopify/hydrogen';
 import {json} from '@shopify/remix-oxygen';
+import {useRouteLoaderData} from '@remix-run/react';
+import {RootLoader} from '~/root';
 
 export async function action({request, context}) {
   // The Skeleton template already has a cart handler which is passed
@@ -57,5 +59,26 @@ export async function action({request, context}) {
       errors,
     },
     {status, headers},
+  );
+}
+
+export default function Cart() {
+  const rootData = useRouteLoaderData<RootLoader>('root');
+  if (!rootData) return null;
+
+  return (
+    <div className="cart">
+      <h1>Cart</h1>
+      <Suspense fallback={<p>Loading cart ...</p>}>
+        <Await
+          resolve={rootData.cart}
+          errorElement={<div>An error occurred</div>}
+        >
+          {(cart) => {
+            return <CartMain layout="page" cart={cart} />;
+          }}
+        </Await>
+      </Suspense>
+    </div>
   );
 }
